@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.genonbeta.android.framework.app.Fragment;
+import androidx.fragment.app.Fragment;
 import com.shiv.shambhu.R;
 import com.shiv.shambhu.config.AppConfig;
 
@@ -47,11 +47,11 @@ public class ConsumableFrag extends Fragment {
 
     private void initializeBillingClient() {
 
-        consumableIds.add("com.tea");
+        consumableIds.add("consumable_id1");
         consumableIds.add("consumable_id2");
         consumableIds.add("consumable_id3");
 
-        billingConnector = new BillingConnector(getContext(), AppConfig.KEY_GOOGLE_PUBLIC) //"license_key" - public developer key from Play Console
+        billingConnector = new BillingConnector(getContext(), "license_key") //"license_key" - public developer key from Play Console
                 .setConsumableIds(consumableIds) //to set consumable ids - call only for consumable products
                 .autoAcknowledge() //legacy option - better call this. Alternatively purchases can be acknowledge via public method "acknowledgePurchase(PurchaseInfo purchaseInfo)"
                 .autoConsume() //legacy option - better call this. Alternatively purchases can be consumed via public method consumePurchase(PurchaseInfo purchaseInfo)"
@@ -72,32 +72,31 @@ public class ConsumableFrag extends Fragment {
 
             @Override
             public void onProductsPurchased(@NonNull List<PurchaseInfo> purchases) {
-                String sku;
-
+                String skuName;
                 for (PurchaseInfo purchaseInfo : purchases) {
-                    sku = purchaseInfo.getSku();
-
-                    if (sku.equalsIgnoreCase("com.tea")) {
-                        //do something
-                        Log.d("BillingConnector", "Product purchased: " + sku);
-                        Toast.makeText(getActivity(), "Product purchased: " + sku, Toast.LENGTH_SHORT).show();
-
-                    } else if (sku.equalsIgnoreCase("consumable_id2")) {
-                        //do something
-                        Log.d("BillingConnector", "Product purchased: " + sku);
-                        Toast.makeText(getActivity(), "Product purchased: " + sku, Toast.LENGTH_SHORT).show();
-
-                    } else if (sku.equalsIgnoreCase("consumable_id3")) {
-                        //do something
-                        Log.d("BillingConnector", "Product purchased: " + sku);
-                        Toast.makeText(getActivity(), "Product purchased: " + sku, Toast.LENGTH_SHORT).show();
-                    }
+                    skuName = purchaseInfo.getSkuInfo().getTitle();
+                    Toast.makeText(getActivity(), "Product purchased : " + skuName, Toast.LENGTH_SHORT).show();
                 }
+                
             }
 
             @Override
             public void onPurchaseAcknowledged(@NonNull PurchaseInfo purchase) {
+                /*
+                 * Grant user entitlement for NON-CONSUMABLE products and SUBSCRIPTIONS here
+                 *
+                 * Even though onProductsPurchased is triggered when a purchase is successfully made
+                 * there might be a problem along the way with the payment and the purchase won't be acknowledged
+                 *
+                 * Google will refund users purchases that aren't acknowledged in 3 days
+                 *
+                 * To ensure that all valid purchases are acknowledged the library will automatically
+                 * check and acknowledge all unacknowledged products at the startup
+                 * */
 
+                String acknowledgedSku = purchase.getSku();
+                Log.d("BillingConnector", "Acknowledged: " + acknowledgedSku);
+                Toast.makeText(getActivity(), "Acknowledged : " + acknowledgedSku, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -106,9 +105,9 @@ public class ConsumableFrag extends Fragment {
                  * CONSUMABLE products entitlement can be granted either here or in onProductsPurchased
                  * */
 
-                String consumedSku = purchase.getSku();
-                Log.d("BillingConnector", "Consumed: " + consumedSku);
-                Toast.makeText(getActivity(), "Consumed: " + consumedSku, Toast.LENGTH_SHORT).show();
+                String consumedSkuTitle = purchase.getSkuInfo().getTitle();
+                Log.d("BillingConnector", "Consumed: " + consumedSkuTitle);
+                Toast.makeText(getActivity(), "Consumed : " + consumedSkuTitle, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -184,14 +183,16 @@ public class ConsumableFrag extends Fragment {
 
     private void notifyList(List<SkuInfo> skuDetails) {
         String sku;
+        String title;
         String price;
 
         purchaseItemDisplay.clear();
         for (SkuInfo skuInfo : skuDetails) {
             sku = skuInfo.getSku();
+            title = skuInfo.getTitle();
             price = skuInfo.getPrice();
 
-            purchaseItemDisplay.add(sku + " "+ price);
+            purchaseItemDisplay.add(title + " : " + price);
             arrayAdapter.notifyDataSetChanged();
 
         }
