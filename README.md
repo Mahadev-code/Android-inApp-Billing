@@ -4,7 +4,7 @@ A simple implementation of the Android In-App Billing API.
 ### Demo Application for In-App Billing [https://play.google.com/store/apps/details?id=com.shiv.shambhu](https://play.google.com/store/apps/details?id=com.shiv.shambhu)
 
 ### Made Possible by
-###### [https://github.com/moisoni97/google-inapp-billing](https://github.com/moisoni97/google-inapp-billing)
+#### [https://github.com/moisoni97/google-inapp-billing](https://github.com/moisoni97/google-inapp-billing)
 
 # Getting Started
 
