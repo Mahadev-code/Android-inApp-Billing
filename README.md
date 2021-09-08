@@ -1,8 +1,8 @@
 # Android In-App Billing Library v4+ [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16) [![JitCI](https://jitci.com/gh/moisoni97/google-inapp-billing/svg)](https://jitci.com/gh/moisoni97/google-inapp-billing) [![JitPack](https://jitpack.io/v/moisoni97/google-inapp-billing.svg)](https://jitpack.io/#moisoni97/google-inapp-billing)
 A simple implementation of the Android In-App Billing API.
 
-### Demo Application for In-App Billing [https://play.google.com/store/apps/details?id=com.shiv.shambhu](https://play.google.com/store/apps/details?id=com.shiv.shambhu)
-### Source Code :- [Download Source Code](https://github.com/Shiv-Shambhu/Shiv-Shambhu-Project)
+#### Demo Application for In-App Billing [https://play.google.com/store/apps/details?id=com.shiv.shambhu](https://play.google.com/store/apps/details?id=com.shiv.shambhu)
+#### Source Code :- [Download Source Code](https://github.com/Shiv-Shambhu/Shiv-Shambhu-Project)
 
 ### Made Possible by [<img src="https://avatars.githubusercontent.com/u/44326908?v=4" width="30"/>](https://github.com/moisoni97/google-inapp-billing)
 #### [https://github.com/moisoni97/google-inapp-billing](https://github.com/moisoni97/google-inapp-billing)
